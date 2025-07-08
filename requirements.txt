@@ -1,0 +1,8 @@
+fastapi
+pydantic
+typing
+httpx
+bs4
+logging
+uvicorn
+datetime
