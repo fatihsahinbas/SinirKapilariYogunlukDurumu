@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import List, Optional, Tuple, Dict, Any
 from pydantic import BaseModel
 import httpx
+from fastapi.responses import RedirectResponse
 from bs4 import BeautifulSoup
 import logging
 import time
@@ -165,6 +166,12 @@ async def border_data(
 
     logger.info("Canlı veri kullanıldı.")
     return {"source": "live", "data": filtered_data}
+
+
+@app.get("/", include_in_schema=False)
+def root():
+    """Kök URL'ye gelenleri otomatik olarak /docs'a yönlendirir."""
+    return RedirectResponse(url="/docs")
 
 # Sağlık kontrolü endpoint'i
 @app.get("/health", status_code=200)
