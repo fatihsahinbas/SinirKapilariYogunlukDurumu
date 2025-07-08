@@ -1,6 +1,5 @@
 from fastapi import FastAPI, Query, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
 from typing import List, Optional, Tuple, Dict, Any
 from pydantic import BaseModel, Field
 import httpx
@@ -9,7 +8,7 @@ import logging
 import time
 from datetime import datetime
 import uvicorn
-import json
+import os
 
 # Logging configuration
 logging.basicConfig(level=logging.INFO)
@@ -464,9 +463,10 @@ def get_cache_statistics(cache_manager: CacheManager = Depends(get_cache_manager
 
 # Application runner
 if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))  # Render'da PORT değişkeni atanır, yoksa 8000 kullanılır
     uvicorn.run(
         "api_usage:app", 
         host="0.0.0.0", 
-        port=8000, 
+        port=port, 
         reload=True
     )
